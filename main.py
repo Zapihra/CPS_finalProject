@@ -9,49 +9,21 @@
 # one faulty sensor (shows there is a car when there is not, should eventually turn the lights yellow)
 # one faulty traffic light (lights should show yellow)
 
-#inputs
-def sensor1(detectCar):
+# other notices
+# when the trafficlight is red the walksers can cross the road
+
+#input
+def sensorDetection(detectCar):
     if detectCar == True:
         return 20
-    
-    if detectCar == False:
-        return 0
-
-    return 0
-
-def sensor2(detectCar):
-    if detectCar == True:
-        return 20
-    
-    if detectCar == False:
-        return 0
-    return 0
-
-def sensor3(detectCar):
-    if detectCar == True:
-        return 20
-    
-    if detectCar == False:
-        return 0
-
-    return 0
-
-def sensor4(detectCar):
-    if detectCar == True:
-        return 20
-    
-    if detectCar == False:
-        return 0
-
-    return 0
+    return 
 
 def walkerButton(walkerButton):
     if walkerButton == True:
         return 10
     return
 
-
-# outputs
+# output
 
 def trafficLightChange(lightGreen, lightRed):
     
@@ -66,20 +38,24 @@ def trafficLightChange(lightGreen, lightRed):
 
 def mainDecisionMaker():
      
-    lightGreen1 = lightGreen2 = lightGreen3 = lightGreen4 = False
-    lightRed1 = lightRed2 = lightRed3 = lightRed4 = True
-    lightYellow1 = lightYellow2 = lightYellow3 = lightYellow4 = False
-    walkerButton1 = walkerButton2 = walkerButton3 = walkerButton4 = False
-
+    lightGreen =  [False] * 4
+    lightRed = [True] * 4
+    lightYellow = [False] * 4
+    walkerButton = [False] * 4
+    detectCar = [False] * 4
 
     table = [True, False, False, True, False, False, True, False]
-    waitTime1 = sensor1(table[0])
-    waitTime2 = sensor2(table[1])
-
-    print(lightGreen1, lightRed1)
+    i = 0
+    for i in range(4): 
+        detectCar[i] = table[i]
+        walkerButton[i] = table[i+4]
     
-    lightGreen1, lightRed1 = trafficLightChange(lightGreen1, lightRed1)
-    print(lightGreen1, lightRed1)
+    
+
+    print(detectCar, walkerButton)
+
+
+    
 
     
     exit
