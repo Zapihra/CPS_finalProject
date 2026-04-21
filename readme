@@ -1,0 +1,32 @@
+output
+traffic light 1, 2, 3 & 4
+
+input
+Walker button 1, 2, 3 & 4
+Sensor 1, 2, 3 & 4
+
+errors
+one faulty sensor (shows there is a car when there is not, should eventually turn the lights yellow)
+one faulty traffic light (lights should show yellow)
+
+other notices
+when the trafficlight is red the walksers can cross the road
+
+trafficlight x and walkerButton x are the same so if walker presses the button 
+the light needs to turn red in order to get the person walk across the road
+
+when the sensor has signaled a car in the direction of green light, 
+the car is so close it cannot stop to the lights
+
+
+       |
+       |                                   |
+       | trafficLight0 ->   trafficLight 1 v
+  -----+------
+       | trafficLigt 2 <-   trafficLight 3 ^
+       |                                   |
+       |
+
+
+lights 0 and 2 can be green on the same time
+light 1 and 3 can be green on the same time
