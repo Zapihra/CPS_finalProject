@@ -81,15 +81,42 @@ def mainDecisionMaker():
     walkerButton = [False] * 4
     detectCar = [False] * 4
 
-    table = [True, False, False, True, False, False, True, False]
-    i = 0
-    for i in range(4): 
-        detectCar[i] = table[i]
-        walkerButton[i] = table[i+4]
-    
+    table = [[False, False, False, False], [False, False, False, True], [False, False, True, False], [False, False,True, True], 
+             [False, True, False, False], [False, True, False, True], [False, True, True, False], [False, True, True, True],
+             [True, False, False, False], [True, False, False, True], [True, False, True, False], [True, False,True, True], 
+             [True, True, False, False], [True, True, False, True], [True, True, True, False], [True, True, True, True]]
+    i = j = 0
+    for i in range(16):
+        for j in range (4):
+            detectCar[j] = table[i][j]
+        #walkerButton[i] = table[i+4]
+
+        if(detectCar[0] & detectCar [2] & detectCar[1] & detectCar[3]):
+            print("car detected all directions")
+        
+        elif(detectCar[0] & detectCar [1] & detectCar[2] | detectCar [1] & detectCar[2] & detectCar[3] | detectCar[2] & detectCar [3] & detectCar[0] | detectCar[3] & detectCar [0] & detectCar[1]):
+            print("car from three directions")
+
+        elif(detectCar[0] & detectCar [1] | detectCar[1] & detectCar [2] | detectCar[2] & detectCar [3] | detectCar[3] & detectCar [0]):
+            print("car detected from two directions collision")
+
+        elif(detectCar[0] & detectCar [2] | detectCar[1] & detectCar[3]):
+            print("car detected two directions no collision")
+
+        elif(detectCar[0] | detectCar [1] | detectCar[2] | detectCar[3]):
+            print("only one car detected")
+
+        else:
+            print("no car detected")
+
+    #elif(detectCar[0] & detectCar [2] & (walkerButton[1] | walkerButton[3]) | detectCar[1] & detectCar[3] & (walkerButton[0] | walkerButton[2])):
+    #    print("car and walker detected no collision")
+
+    #elif(detectCar[0] & detectCar [2] & (walkerButton[0] | walkerButton[2]) | detectCar[1] & detectCar[3] & (walkerButton[1] | walkerButton[3])):
+    #    print("car detected collides with walker")
     
 
-    print(detectCar, walkerButton)
+    print(detectCar)
 
 
     
