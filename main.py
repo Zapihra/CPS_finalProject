@@ -31,6 +31,7 @@
 ## lights 0 and 2 can be green on the same time
 ## light 1 and 3 can be green on the same time
 
+import numpy as np
 
 #input
 def sensorDetection(detectCar):
@@ -73,41 +74,65 @@ def trafficLightChange(lightGreen, lightRed):
 ## carDetection from direction 0, 1 and 2 or 1, 2 and 3 or 2, 3 and 0 or 3, 0 and 1 or all directions as well as
 ## walkerButton from direction 0, 1 and 2 or 1, 2 and 3 or 2, 3 and 0 or 3, 0 and 1 or all directions
 
+
+def detection(detection):
+    #print(detection)
+    if(detection[0] and detection[2] and detection[1] and detection[3]):
+        print("detected all directions")
+        return 1
+        
+    elif(detection[0] and detection[1] and detection[2] or detection [1] and detection[2] and detection[3] or detection[2] and detection [3] and detection[0] or detection[3] and detection [0] and detection[1]):
+        print("detection from three directions")
+        return 2
+
+    elif(detection[0] and detection[1] or detection[1] and detection [2] or detection[2] and detection [3] or detection[3] and detection [0]):
+        print("detected from two directions collision")
+        return 3
+
+    elif(detection[0] and detection[2] or detection[1] and detection[3]):
+        print("detected two directions no collision")
+        return 4
+
+    elif(detection[0] or detection[1] or detection[2] or detection[3]):
+        print("only one detected")
+        return 5
+
+    else:
+        print("no detection")
+        return 6
+    
+
+    
+
 def mainDecisionMaker():
      
     lightGreen =  [False] * 4
     lightRed = [True] * 4
     lightYellow = [False] * 4
-    walkerButton = [False] * 4
-    detectCar = [False] * 4
+    
 
-    table = [[False, False, False, False], [False, False, False, True], [False, False, True, False], [False, False,True, True], 
-             [False, True, False, False], [False, True, False, True], [False, True, True, False], [False, True, True, True],
-             [True, False, False, False], [True, False, False, True], [True, False, True, False], [True, False,True, True], 
-             [True, True, False, False], [True, True, False, True], [True, True, True, False], [True, True, True, True]]
-    i = j = 0
-    for i in range(16):
-        for j in range (4):
-            detectCar[j] = table[i][j]
-        #walkerButton[i] = table[i+4]
+    length = 8
 
-        if(detectCar[0] & detectCar [2] & detectCar[1] & detectCar[3]):
-            print("car detected all directions")
+    
+    randTable = np.random.randint(0, 2, size=(length,8))
+    
+    for i in range(length):
+        walkerButton = [False] * 4
+        detectCar = [False] * 4
+        for j in range (8):
+            
+            if (randTable[i][j] == 1 and j<4):
+                detectCar[j] = True
+            elif (randTable[i][j] == 1 and j>3):
+                walkerButton[j-4] = True 
         
-        elif(detectCar[0] & detectCar [1] & detectCar[2] | detectCar [1] & detectCar[2] & detectCar[3] | detectCar[2] & detectCar [3] & detectCar[0] | detectCar[3] & detectCar [0] & detectCar[1]):
-            print("car from three directions")
 
-        elif(detectCar[0] & detectCar [1] | detectCar[1] & detectCar [2] | detectCar[2] & detectCar [3] | detectCar[3] & detectCar [0]):
-            print("car detected from two directions collision")
+        scenarioCar = detection(detectCar)
+        scenarioWalker = detection(walkerButton)
+        
 
-        elif(detectCar[0] & detectCar [2] | detectCar[1] & detectCar[3]):
-            print("car detected two directions no collision")
+    
 
-        elif(detectCar[0] | detectCar [1] | detectCar[2] | detectCar[3]):
-            print("only one car detected")
-
-        else:
-            print("no car detected")
 
     #elif(detectCar[0] & detectCar [2] & (walkerButton[1] | walkerButton[3]) | detectCar[1] & detectCar[3] & (walkerButton[0] | walkerButton[2])):
     #    print("car and walker detected no collision")
@@ -116,7 +141,7 @@ def mainDecisionMaker():
     #    print("car detected collides with walker")
     
 
-    print(detectCar)
+    #print(detectCar)
 
 
     
