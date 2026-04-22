@@ -75,7 +75,7 @@ def mainDecisionMaker():
     lightRed = [True, False] * 2
     lightYellow = [False] * 4
     faultDetection = 0
-    length = 20
+    length = 1000
     
     #input of 4 sensors and 4 walker buttons for the length of 8
     randTable = np.random.randint(0, 2, size=(length,8))
@@ -92,6 +92,15 @@ def mainDecisionMaker():
 
         scenarioCar = detection(detectCar)
         scenarioWalker = detection(walkerButton)
+
+        if detectCar[0] == True:
+            faultDetection = faultDetection + 1
+        else:
+            faultDetection = 0
+        
+        if faultDetection >= 13:
+            print(faultDetection)
+
         
         if (scenarioCar == 6 and scenarioWalker == 6):
             #print("no cars, no walkers, no need to change anything")
@@ -148,6 +157,7 @@ def mainDecisionMaker():
             #print("waiting for walkers or cars and then changing lights")
             lightGreen, lightRed = trafficLightChange(lightGreen, lightRed, carDirection, 2)
     
+    #print(faultDetectionList)
     return 0
 
 
