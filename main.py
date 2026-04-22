@@ -16,48 +16,29 @@ def walkerButton(walkerButton):
 def trafficLightChange(lightGreen, lightRed, carDirection, case):
     
     if case == 0:
-        if(lightRed[0] == False):
-            lightGreen[0] = lightRed[0] = False
-            lightGreen[2] = lightRed[2] = False
-            
-        elif(lightRed[1] == False):
-            lightGreen[1] = lightRed[1] = False
-            lightGreen[3] = lightRed[3] = False
+       
+        lightGreen[0] = lightGreen[1] = False
+        lightGreen[2] = lightGreen[3] = False
+        
+        lightRed[0] = lightRed[1] = True
+        lightRed[2] = lightRed[3] = True
 
     elif case == 1:
         #it is known that the direction is red
-        if carDirection == 0:
-            if (lightGreen[1] == True):
-                lightGreen[1] = lightRed[1] = False
-                lightGreen[3] = lightRed[3] = False
-                lightGreen[0] = lightRed[3] = True
-                lightGreen[2] = lightRed[2] = True
-            else:
-                lightGreen[0] = lightRed[0] = True
-                lightGreen[2] = lightRed[2] = True
+        if carDirection == 0 or carDirection == 2:
             
-        elif carDirection == 3:
-            if (lightGreen[2] == True):
-                lightGreen[2] = lightRed[2] = False
-                lightGreen[0] = lightRed[0] = False
-                lightGreen[1] = lightRed[1] = True
-                lightGreen[3] = lightRed[3] = True
-            else:
-                lightGreen[1] = lightRed[1] = True
-                lightGreen[3] = lightRed[3] = True
-
+            lightGreen[1] = lightRed[0] = False
+            lightGreen[3] = lightRed[2] = False
+            lightGreen[0] = lightRed[1] = True
+            lightGreen[2] = lightRed[3] = True
+            
+            
         else:
-            if (lightGreen[carDirection-1] == True):
-                lightGreen[carDirection-1] = lightRed[carDirection-1] = False #0 #1
-                lightGreen[carDirection+1] = lightRed[carDirection+1] = False #2 #3
-
-                if(carDirection == 1):
-                    lightGreen[1] = lightRed[1] = True
-                    lightGreen[3] = lightRed[3] = True
-                else:
-                    lightGreen[2] = lightRed[2] = False
-                    lightGreen[0] = lightRed[0] = False 
-
+            lightGreen[2] = lightRed[3] = False
+            lightGreen[0] = lightRed[1] = False
+            lightGreen[1] = lightRed[0] = True
+            lightGreen[3] = lightRed[2] = True
+            
 
 
     return lightGreen, lightRed
