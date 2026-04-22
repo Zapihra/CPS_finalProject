@@ -1,18 +1,6 @@
 import numpy as np
 
-#input
-def sensorDetection(detectCar):
-    if detectCar == True:
-        return 20
-    return 
-
-def walkerButton(walkerButton):
-    if walkerButton == True:
-        return 10
-    return
-
 # output
-
 def trafficLightChange(lightGreen, lightRed, carDirection, case):
     
     if case == 0:
@@ -86,9 +74,10 @@ def mainDecisionMaker():
     lightGreen =  [False, True] * 2
     lightRed = [True, False] * 2
     lightYellow = [False] * 4
-    
+    faultDetection = 0
     length = 20
     
+    #input of 4 sensors and 4 walker buttons for the length of 8
     randTable = np.random.randint(0, 2, size=(length,8))
     
     for i in range(length):
@@ -99,65 +88,65 @@ def mainDecisionMaker():
             if (randTable[i][j] == 1 and j<4):
                 detectCar[j] = True
             elif (randTable[i][j] == 1 and j>3):
-                walkerButton[j-4] = True 
-        
+                walkerButton[j-4] = True
 
         scenarioCar = detection(detectCar)
         scenarioWalker = detection(walkerButton)
         
         if (scenarioCar == 6 and scenarioWalker == 6):
-            print("no cars, no walkers, no need to change anything")
+            #print("no cars, no walkers, no need to change anything")
+            continue
 
         elif (scenarioCar == 6):   
-            print("change all car lights to red")
+            #print("change all car lights to red")
             lightGreen, lightRed = trafficLightChange(lightGreen, lightRed, -1, 0)
 
         elif ((scenarioCar == 4 or scenarioCar == 5) and (scenarioWalker == 6 or scenarioWalker == 5 or scenarioWalker == 4)):
-            print("one car or parallel cars detected with no walkers, one walker or two parallel walkers")
+            #print("one car or parallel cars detected with no walkers, one walker or two parallel walkers")
             
             #print(detectCar, walkerButton)
             carDirection = detectCar.index(True)
             
             if(scenarioWalker == 6):
-                print("no walkers, change light to green")
+                #print("no walkers, change light to green")
                 
                 if (lightGreen[carDirection] == True):
-                    print("already green")
+                    #print("already green")
+                    continue
                 else: 
-                    print("now red, changing direction " + str(carDirection) + " to green")
+                    #print("now red, changing direction " + str(carDirection) + " to green")
                     lightGreen, lightRed = trafficLightChange(lightGreen, lightRed, carDirection, 1)
 
             elif(((detectCar[0] == True or detectCar[2] == True) and (walkerButton[1]== True or walkerButton[3] == True)) or
                  ((detectCar[1] == True or detectCar[3] == True) and (walkerButton[0]== True or walkerButton[2] == True))):
-                print("walkers and cars in parrallel")
+                #print("walkers and cars in parrallel")
                 if(lightGreen[carDirection] == True):
-                    print("already green")
+                    #print("already green")
+                    continue
                 else: 
-                    print("now red, changing direction " + str(carDirection) + " to green")
+                    #print("now red, changing direction " + str(carDirection) + " to green")
                     lightGreen, lightRed = trafficLightChange(lightGreen, lightRed, carDirection, 1)
 
             else:
-                print("walkers and cars in conflict")
+                #print("walkers and cars in conflict")
 
                 if (lightGreen[0] == False and lightGreen[1] == False):
-                    print("all lights were red")
+                    #print("all lights were red")
                     lightGreen, lightRed = trafficLightChange(lightGreen, lightRed, carDirection, 1)
                     
-                print("waiting for walkers or cars and then changing lights")
+                #print("waiting for walkers or cars and then changing lights")
                 lightGreen, lightRed = trafficLightChange(lightGreen, lightRed, carDirection, 2)
 
         else:
-            print("walkers and cars in multiple direction")
+            #print("walkers and cars in multiple direction")
             carDirection = detectCar.index(True)
             
-
             if (lightGreen[0] == False and lightGreen[1] == False):
-                print("all lights were red")
+                #print("all lights were red")
                 lightGreen, lightRed = trafficLightChange(lightGreen, lightRed, carDirection, 1)
                 
-            print("waiting for walkers or cars and then changing lights")
+            #print("waiting for walkers or cars and then changing lights")
             lightGreen, lightRed = trafficLightChange(lightGreen, lightRed, carDirection, 2)
-
     
     return 0
 

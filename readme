@@ -6,8 +6,11 @@ Walker button 1, 2, 3 & 4
 Sensor 1, 2, 3 & 4
 
 errors
-one faulty sensor (shows there is a car when there is not, should eventually turn the lights yellow)
-one faulty traffic light (lights should show yellow)
+one faulty sensor (shows there is a car when there is not, should eventually (10 rounds) turn the lights yellow)
+visuality of this fault is shown with observation of the one faulty sensor
+in addition a Q test and T^2 test will be made
+
+for simplicity's sake the faulty sensor will be the sensor 1
 
 other notices
 when the trafficlight is red the walksers can cross the road
