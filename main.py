@@ -102,13 +102,13 @@ def mainDecisionMaker():
         if detectCar[0] == True:
             faultDetection = faultDetection + 1
         else:
-            faultDetectionList.append(faultDetection)
+            
             faultDetection = 0
 
+        faultDetectionList.append(faultDetection)
         
-        
-        #if faultDetection >= 13:
-        #    print(faultDetection)
+        if faultDetection >= 10:
+            print(faultDetection)
 
         
         if (scenarioCar == 6 and scenarioWalker == 6):
@@ -170,10 +170,21 @@ def mainDecisionMaker():
 
 
     avg = np.average(faultDetectionList)
-    print(avg)
     
+    #print(faultDetectionList)
 
-    
+    print(avg)
+    print(faultDetectionList.count(0))
+    print(faultDetectionList.count(1))
+    print(faultDetectionList.count(2))
+    print(faultDetectionList.count(3))
+    print(faultDetectionList.count(4))
+    print(faultDetectionList.count(5))
+    print(faultDetectionList.count(6))
+    print(faultDetectionList.count(7))
+    print(faultDetectionList.count(8))
+    print(faultDetectionList.count(9))
+    print(faultDetectionList.count(10))
 
     plt.figure(figsize=(15,8))
     plt.plot(faultDetectionList)
@@ -181,7 +192,7 @@ def mainDecisionMaker():
     plt.xlabel("Time")
     plt.ylabel("Sensor0 detections of cars in a row")
     plt.grid(True)
-    #plt.show()
+    plt.show()
 
     
     return 0
