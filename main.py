@@ -86,11 +86,12 @@ def mainDecisionMaker():
      
     lightGreen =  [False, True] * 2
     lightRed = [True, False] * 2
-    lightYellow = [False] * 4
     faultDetection = 0
     faultDetectionList = []
     sensor0 = []
     length = 1000
+    probabilityDetect = 0
+    probabilityDetectList = []
     
     #input of 4 sensors and 4 walker buttons for the length of 8
     randTable = np.random.randint(0, 2, size=(length,8))
@@ -106,8 +107,8 @@ def mainDecisionMaker():
                 walkerButton[j-4] = True
 
         #error of faulty sensor   
-        #if i >= 150:
-        #    detectCar[0] = True 
+        if i >= 500:
+            detectCar[0] = True 
 
         scenarioCar = detection(detectCar)
         scenarioWalker = detection(walkerButton)
@@ -117,20 +118,23 @@ def mainDecisionMaker():
         elif faultDetection > 1:
             faultDetectionList.append(faultDetection)
             faultDetection = 0
+            probabilityDetect = 0
         else:
             faultDetection = 0
 
-        sensor0.append(faultDetection)
-        #binomialTest()
+        #probability = binomialTest(faultDetection)
         probability = poissonTest(faultDetection)
         
-        if probability <= 0.001:
-            print("fault")
+        if probability <= 0.0005 and probabilityDetect == 0:
+            probabilityDetect = 1
+            probabilityDetectList.append(i)
 
-        #if faultDetection >= 10:
-        #    print(faultDetection)
+        if probabilityDetect == 1 and probabilityDetectList[0] < i:
+            faultDetection = 0
 
-        
+
+        sensor0.append(faultDetection)
+
         if (scenarioCar == 6 and scenarioWalker == 6):
             #print("no cars, no walkers, no need to change anything")
             continue
@@ -187,17 +191,16 @@ def mainDecisionMaker():
             lightGreen, lightRed = trafficLightChange(lightGreen, lightRed, carDirection, 2)
     
     #print(faultDetectionList)
-
-
     #avg = np.average(faultDetectionList)
     
     #print(faultDetectionList)
 
     #print(avg)
-
+    print(probabilityDetectList[0])
     plt.figure(figsize=(15,8))
     plt.plot(sensor0)
-    plt.plot(150, sensor0[150],'or') #sensor fault
+    plt.plot(500, sensor0[500],'or') #sensor fault
+    plt.plot(probabilityDetectList[0], sensor0[probabilityDetectList[0]], 'og')
     plt.xlabel("Time")
     plt.ylabel("Sensor0 detections of cars in a row")
     plt.grid(True)

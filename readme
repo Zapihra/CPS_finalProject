@@ -10,7 +10,7 @@ one faulty sensor (shows there is a car when there is not, should eventually tur
 visuality of this fault is shown with observation of the one faulty sensor
 
 for simplicity's sake the faulty sensor will be the sensor 0 
-The fault will be set to launch in the 150th line 
+The fault will be set to launch in the 275th line 
 
 Pictures will be shown from normal workability, the faulty sensor 
 test will be counted as poisson distirbution and binominal distribution for 
