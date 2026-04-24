@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 # output
 def trafficLightChange(lightGreen, lightRed, carDirection, case):
@@ -75,6 +76,7 @@ def mainDecisionMaker():
     lightRed = [True, False] * 2
     lightYellow = [False] * 4
     faultDetection = 0
+    faultDetectionList = []
     length = 1000
     
     #input of 4 sensors and 4 walker buttons for the length of 8
@@ -97,6 +99,8 @@ def mainDecisionMaker():
             faultDetection = faultDetection + 1
         else:
             faultDetection = 0
+
+        faultDetectionList.append(faultDetection)
         
         if faultDetection >= 13:
             print(faultDetection)
@@ -158,6 +162,15 @@ def mainDecisionMaker():
             lightGreen, lightRed = trafficLightChange(lightGreen, lightRed, carDirection, 2)
     
     #print(faultDetectionList)
+
+    plt.figure(figsize=(15,8))
+    plt.plot(faultDetectionList)
+    plt.xlabel("Time")
+    plt.ylabel("Sensor0 detections of cars in a row")
+    plt.grid(True)
+    plt.show()
+
+    
     return 0
 
 

@@ -8,11 +8,13 @@ Sensor 1, 2, 3 & 4
 errors
 one faulty sensor (shows there is a car when there is not, should eventually turn the lights yellow)
 visuality of this fault is shown with observation of the one faulty sensor
-in addition a Q test and T^2 test will be made
 
 for simplicity's sake the faulty sensor will be the sensor 0 
 The limit will be set 13 truths in the 1000 lines that is tested in this program
 The fault will be set to launch in the 150th line 
+
+Pictures will be shown from normal workability, the faulty sensor 
+and poisson distirbution for probability
 
 other notices
 when the trafficlight is red the walksers can cross the road
