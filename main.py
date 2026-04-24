@@ -92,18 +92,23 @@ def mainDecisionMaker():
             elif (randTable[i][j] == 1 and j>3):
                 walkerButton[j-4] = True
 
+        #error of faulty sensor   
+        #if i >= 150:
+        #    detectCar[0] = True 
+
         scenarioCar = detection(detectCar)
         scenarioWalker = detection(walkerButton)
 
         if detectCar[0] == True:
             faultDetection = faultDetection + 1
         else:
+            faultDetectionList.append(faultDetection)
             faultDetection = 0
 
-        faultDetectionList.append(faultDetection)
         
-        if faultDetection >= 13:
-            print(faultDetection)
+        
+        #if faultDetection >= 13:
+        #    print(faultDetection)
 
         
         if (scenarioCar == 6 and scenarioWalker == 6):
@@ -163,12 +168,20 @@ def mainDecisionMaker():
     
     #print(faultDetectionList)
 
+
+    avg = np.average(faultDetectionList)
+    print(avg)
+    
+
+    
+
     plt.figure(figsize=(15,8))
     plt.plot(faultDetectionList)
+    plt.plot(150, faultDetectionList[150],'or') #sensor fault
     plt.xlabel("Time")
     plt.ylabel("Sensor0 detections of cars in a row")
     plt.grid(True)
-    plt.show()
+    #plt.show()
 
     
     return 0
