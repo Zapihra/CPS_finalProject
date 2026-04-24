@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import poisson
+from scipy.stats import binom
 
 # output
 def trafficLightChange(lightGreen, lightRed, carDirection, case):
@@ -69,6 +71,16 @@ def detection(detection):
         #print("no detection")
         return 6
         
+#probability of how high the number rises after 1, counted from average of the faultDetectionList
+def poissonTest(number):
+    lam = 2.9
+    probability = poisson.pmf(number, lam)
+    return probability
+
+#probability of how probable it is to get to that number
+def binomialTest(number):
+    probability = binom.pmf(number,number,0.5)
+    return probability
 
 def mainDecisionMaker():
      
@@ -77,6 +89,7 @@ def mainDecisionMaker():
     lightYellow = [False] * 4
     faultDetection = 0
     faultDetectionList = []
+    sensor0 = []
     length = 1000
     
     #input of 4 sensors and 4 walker buttons for the length of 8
@@ -101,14 +114,21 @@ def mainDecisionMaker():
 
         if detectCar[0] == True:
             faultDetection = faultDetection + 1
+        elif faultDetection > 1:
+            faultDetectionList.append(faultDetection)
+            faultDetection = 0
         else:
-            
             faultDetection = 0
 
-        faultDetectionList.append(faultDetection)
+        sensor0.append(faultDetection)
+        #binomialTest()
+        probability = poissonTest(faultDetection)
         
-        if faultDetection >= 10:
-            print(faultDetection)
+        if probability <= 0.001:
+            print("fault")
+
+        #if faultDetection >= 10:
+        #    print(faultDetection)
 
         
         if (scenarioCar == 6 and scenarioWalker == 6):
@@ -169,26 +189,15 @@ def mainDecisionMaker():
     #print(faultDetectionList)
 
 
-    avg = np.average(faultDetectionList)
+    #avg = np.average(faultDetectionList)
     
     #print(faultDetectionList)
 
-    print(avg)
-    print(faultDetectionList.count(0))
-    print(faultDetectionList.count(1))
-    print(faultDetectionList.count(2))
-    print(faultDetectionList.count(3))
-    print(faultDetectionList.count(4))
-    print(faultDetectionList.count(5))
-    print(faultDetectionList.count(6))
-    print(faultDetectionList.count(7))
-    print(faultDetectionList.count(8))
-    print(faultDetectionList.count(9))
-    print(faultDetectionList.count(10))
+    #print(avg)
 
     plt.figure(figsize=(15,8))
-    plt.plot(faultDetectionList)
-    plt.plot(150, faultDetectionList[150],'or') #sensor fault
+    plt.plot(sensor0)
+    plt.plot(150, sensor0[150],'or') #sensor fault
     plt.xlabel("Time")
     plt.ylabel("Sensor0 detections of cars in a row")
     plt.grid(True)
