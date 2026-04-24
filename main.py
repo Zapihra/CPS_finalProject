@@ -107,8 +107,8 @@ def mainDecisionMaker():
                 walkerButton[j-4] = True
 
         #error of faulty sensor   
-        if i >= 500:
-            detectCar[0] = True 
+        #if i >= 500:
+        #    detectCar[0] = True 
 
         scenarioCar = detection(detectCar)
         scenarioWalker = detection(walkerButton)
@@ -123,11 +123,11 @@ def mainDecisionMaker():
             faultDetection = 0
 
         #probability = binomialTest(faultDetection)
-        probability = poissonTest(faultDetection)
+        #probability = poissonTest(faultDetection)
         
-        if probability <= 0.0005 and probabilityDetect == 0:
-            probabilityDetect = 1
-            probabilityDetectList.append(i)
+        #if probability <= 0.0005 and probabilityDetect == 0:
+        #    probabilityDetect = 1
+        #    probabilityDetectList.append(i)
 
         if probabilityDetect == 1 and probabilityDetectList[0] < i:
             faultDetection = 0
@@ -196,11 +196,12 @@ def mainDecisionMaker():
     #print(faultDetectionList)
 
     #print(avg)
-    print(probabilityDetectList[0])
+    #print(probabilityDetectList[0])
     plt.figure(figsize=(15,8))
     plt.plot(sensor0)
-    plt.plot(500, sensor0[500],'or') #sensor fault
-    plt.plot(probabilityDetectList[0], sensor0[probabilityDetectList[0]], 'og')
+    #plt.plot(500, sensor0[500],'or') #sensor fault
+    #plt.plot(probabilityDetectList[0], sensor0[probabilityDetectList[0]], 'og')
+    plt.title("Normal sensor")
     plt.xlabel("Time")
     plt.ylabel("Sensor0 detections of cars in a row")
     plt.grid(True)
